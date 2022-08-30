@@ -1,0 +1,63 @@
+﻿@using System.Globalization
+@model List<Order>
+@{
+    ViewData["Title"] = "История заказов";
+}
+
+<div class="row" style="margin: 0 auto; width:1200px;">
+
+    <div style="width:900px;padding-top:10px;">
+        <h2 style="font-weight:bold;">История заказов</h2>
+        <div class="row" style="width:600px;height:50px; padding-top:20px;">
+            <div style="width:200px;text-align:left;height:50px;">
+                <p>Дата оформления</p>
+            </div>
+            <div style="width:200px;text-align:center;height:50px;">
+                <p>Номер заказа</p>
+            </div>
+            <div style="width:200px;text-align:right;height:50px;">
+                <p>Сумма заказа</p>
+            </div>
+        </div>
+        @foreach(var order in Model)
+        {
+            <div class="row" style="width:600px;">
+                <div style="width:200px;text-align:left;height:30px;">
+                    <p>@order.datePurchase</p>
+                </div>
+                <div style="width:200px;text-align:center;height:30px;">
+                    <a style="color:#B79B7E;" asp-controller="ShopCart" asp-action="OrderStatus" asp-route-id="@order.Id">@order.Id</a>
+                </div>
+                <div style="width:200px;text-align:right;height:30px;">
+                    <p>@order.Price.ToString("#,#", CultureInfo.InvariantCulture) ₸</p>
+                </div>
+            </div>
+        }
+        
+    </div>
+
+     <div style="width:300px; padding-top:100px; ">
+        <a asp-controller="Account" asp-action="UserPage">
+            <div class="btn" style="background: #B79B7E; color:white;height:50px; padding:0px;border-bottom: 2px solid grey; text-align:center;width:300px; border-top-left-radius:10px; border-top-right-radius:10px;border-bottom-left-radius:0; border-bottom-right-radius:0;">
+                <p style="font-size: 20px">Личные данные</p>
+            </div>
+        </a>
+        <a asp-controller="Account" asp-action="UserPage">
+            <div class="btn" style="background: #B79B7E; color:white;height:50px; padding:0px;border-bottom: 2px solid grey; text-align:center;width:300px;border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:0; border-bottom-right-radius:0; ">
+                <p style="font-size: 20px" >История заказов</p>
+            </div>
+        </a>
+        <a asp-controller="ShopCart" asp-action="ShopCart">
+            <div class="btn" style="background: #B79B7E; color:white;height:50px; padding:0px;border-bottom: 2px solid grey; text-align:center;width:300px;border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:0; border-bottom-right-radius:0; ">
+                <p style="font-size: 20px">Корзина</p>
+            </div>
+        </a>
+        <form  method="post" asp-controller="Account" asp-action="Logout">
+            @*<button style="background: #B79B7E; color:white;height:50px; width:300px; padding:0px;border-bottom: 2px solid grey; text-align:center; border-bottom-left-radius:10px; border-bottom-right-radius:10px;">
+                <h5>Выйти</h5>*@
+                <input type="submit"  class="btn" style="background: #B79B7E; color:white;height:50px; width:300px; padding:0px;border-bottom: 2px solid grey; text-align:center;border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:10px; border-bottom-right-radius:10px;font-size: 20px" value="Выйти">
+            @*</button>*@
+        </form>
+        
+    </div>
+</div>

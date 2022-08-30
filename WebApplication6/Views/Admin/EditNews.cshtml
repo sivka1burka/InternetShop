@@ -1,0 +1,55 @@
+﻿@model NewsViewModel
+@using System.Linq;
+@using WebApplication6.ViewModels
+@{ 
+    ViewBag.Title = "Изменение новости";
+
+}
+<div class="row" style="margin: 0 auto; width:1550px; text-align:center;">
+    <div style="width:300px;">
+        <div  style="padding-bottom:20px;">
+            <h5>Заказы</h5>
+            <a asp-controller="Admin" asp-action="ListOrders"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Список заказов</h6></div></a>
+        </div>
+        <div  style="padding-bottom:20px;">
+            <h5>Товары</h5>
+            <a asp-controller="Admin" asp-action="AddProduct"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black; "><h6>Добавление товара</h6> </div></a>
+            <a asp-controller="Admin" asp-action="ListProducts"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Удаление\изменение товара</h6> </div></a>
+        </div>
+        <div  style="padding-bottom:20px;">
+            <h5>Пользователи</h5>
+            <a asp-controller="Roles" asp-action="Index"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Список ролей</h6></div></a>
+            <a asp-controller="Roles" asp-action="Create"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Добавить роль</h6></div></a>
+            <a asp-controller="Roles" asp-action="UserList"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"> <h6>Список пользователей</h6></div></a>
+        </div>
+        <div  style="padding-bottom:20px;">
+            <h5>Новости</h5>
+            <a asp-controller="Admin" asp-action="AddNews"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Добавить новость</h6></div></a>
+            <a asp-controller="Admin" asp-action="ListNews"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Удаление\изменение новости</h6></div></a>       
+        </div>
+    </div>
+    <div style="width:1200px;padding-left:50px;padding-top:10px; text-align:center;">
+        <form asp-controller="Admin" asp-action="EditNews"  method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="Id" class="control-label">Id</label>
+            <input type="text" asp-for="Id" class="form-control"  value="@Model.Id"/>
+        </div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label">Название</label>
+            <input type="text" asp-for="Name" class="form-control"  value="@Model.Name"/>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="control-label">Описание</label>
+            <input type="text" asp-for="Description" class="form-control" value="@Model.Description"/>
+        </div>  
+        <div class="form-group">
+            <label asp-for="Image" class="control-label">Изображение</label><br/>
+            <img src="data:image;base64,@System.Convert.ToBase64String(@Model.ImgByte)" height="100" width="250"  />
+            <input type="file" name="Image" class="form-control" value="@Model.Image">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Отправить" class="btn" style="background: #B79B7E; color:white" />
+        </div>
+        </form>
+    </div>     
+</div>

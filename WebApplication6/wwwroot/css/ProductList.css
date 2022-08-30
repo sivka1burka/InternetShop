@@ -1,0 +1,37 @@
+.wrap {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+    }
+    aside {
+      flex: 0 0 calc( 30% - 30px );
+      padding: 15px;	
+    }
+    .sidebar {
+      background-color: green;
+      min-height: 90vh;
+      padding: 15px 0 15px 15px;
+    }
+    .catalog{
+      flex: 1 0 70%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: stretch;
+    }
+    .cell {
+      padding: 15px;
+      flex: 0 0 calc( 25% - 30px );
+      min-width: 300px;
+      display: flex;
+      flex-direction: row;
+    }
+    .cell_inside {
+    	background-color: yellow;
+    flex: 1;
+    padding: 15px;
+    min-height: 140px;//Just in case you dont have enough content
+    }
+    aside + .catalog .cell {
+      flex: 0 0 calc( 33% - 30px );
+}

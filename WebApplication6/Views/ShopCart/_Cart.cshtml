@@ -1,0 +1,60 @@
+﻿@using System.Globalization
+@using WebApplication6.ViewModels
+@model ShopCartViewModel
+
+
+<div id="shopCard" class="container row"  >
+        @if (Model.shopCart.listShopItems.Count()!=0)
+        {
+            <div class="col">
+                @foreach(var el in Model.shopCart.listShopItems)
+                {
+                    <div class="container row">
+                        <div>
+                            <img src="data:image;base64,@System.Convert.ToBase64String(@el.product.Image)" height="200" width="200"  />
+                        </div>
+                        <div style="padding-left:35px">
+                            <div class="container row" style="padding-top:15px">
+                                <div style="justify-content: center;">
+                                    @if (el.product.Name.Length > 33)
+                                    {
+                                        string str1=el.product.Name.Substring(0, 30);
+                                        <h6 style="font-weight:bold; " >@str1...</h6>
+                                    }
+                                    else
+                                    {
+                                        <h6 style="font-weight:bold; " >@el.product.Name</h6>
+                                    }
+                                </div>                           
+                                <div style="position: absolute; right: 0;">
+                                    <a asp-controller="ShopCart" asp-action="RemoveFromCart" asp-route-id="@el.product.Id"><div class="btn justify-content-center" ><h3 class="text-muted">×</h3></div></a>
+                                </div>
+                            </div>
+                            <div>
+                                <b style="font-weight:200">@el.product.TotalPrice.ToString("#,#", CultureInfo.InvariantCulture) ₸</b>
+                            </div>
+                            <div class="row" style="padding-top:45px;">
+                                <div class="row">
+                                    <a asp-controller="ShopCart" asp-action="MinusShopCartItem" asp-route-id="@el.product.Id" > <div class="btn"  style="background: #B79B7E; color:white; height:30px; width:30px; border-radius:0; border:none;font-weight:bold; padding:0px;">-</div></a>
+                                    @*<input onchange="updatePrice(this, @el.product.TotalPrice, this.value)" type="number" min="1" max="@el.product.Amount" value="@el.Quantity"  style="background: #B79B7E; color:white; height:30px; width:80px; border-radius:0; border:none; text-align:center;font-weight:bold;padding:0px;">*@
+                                    <div style="background: #B79B7E; color:white; height:30px; width:80px; border-radius:0; border:none; text-align:center;font-weight:bold;padding:0px;">@el.Quantity</div>
+                                    <a asp-controller="ShopCart" asp-action="PlusShopCartItem" asp-route-id="@el.product.Id" ><div class="btn"  style="background: #B79B7E; color:white; height:30px; width:30px; border-radius:0; border:none;font-weight:bold;padding:0px;">+</div></a>
+                                </div>
+                                <div style="position: absolute; right: 0; padding-right:10px;">
+                                    <h5 class="totalSum" style="font-weight:300">@el.Price.ToString("#,#", CultureInfo.InvariantCulture) ₸</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class=" justify-content-center" style="background:#f7f7f7; text-align:center; height:200px; width:400px; border-radius:10px; ">
+                <h4 style="padding-top:60px;font-weight:bold;">Итого к оплате:     @Model.shopCart.listShopItems.Select(x => x.Price).Sum().ToString("#,#", CultureInfo.InvariantCulture) ₸</h4>
+                <a asp-controller="ShopCart" asp-action="Order" asp-route-id="@Model.shopCart.ShopCartId"><div class="btn" style="background: #B79B7E; color:white; width:300px" asp-controller="Order">Оформить заказ</div></a>
+            </div>
+        }
+        else
+        {
+            <b style="font-weight:200">Ваша корзина пуста</b>
+        }
+</div>

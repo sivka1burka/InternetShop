@@ -1,0 +1,75 @@
+﻿@using System.Globalization
+@model Order
+@{
+    ViewData["Title"] = "Оформление заказа";
+}
+
+<div class="row" style="margin: 0 auto; width:1200px; padding-top:20px;">
+    <div style="width:590px;">
+        <h2 style="font-weight:bold;">Оформление заказа</h2>
+        <form method="post" asp-controller="ShopCart" asp-action="Order">
+            <div class="pt-3">
+                <h4 style="font-weight:bold;">Контактные данные</h4>
+                <p>Контактное лицо (ФИО)*</p>
+                <input asp-for="FullName" value="@Model.FullName" style="width:350px"/><br />    
+            </div>
+            <div class="pt-3">
+                <p>Контактный телефон*</p>
+                <input  id="phone" asp-for="PhoneNumber" type="text" value="@Model.PhoneNumber" style="width:350px"/><br />
+            </div>
+            <div class="pt-3">
+                <h4 style="font-weight:bold;">Самовывоз</h4>
+                <div>
+                    <p>г. Караганда, проспект Бухар Жырау, д.55/6</p>
+                    <p>Пн-Вс с 10:00 до 20:00</p>
+                </div>
+            </div>
+            <div class="pt-3">
+                <h4 style="font-weight:bold;">Способ оплаты</h4>
+                <p>В магазине можно оплатить наличными, картой</p>
+            </div>
+            <div class="pt-3">
+                <input type="submit" class="btn" style="background: #B79B7E; color:white;width:350px;" value="Подтвердить заказ" />
+            </div>
+        </form>
+    </div>
+    <div style="width:590px; ">
+        @foreach(var prod in Model.Products)
+        {
+            <div class="row" style="width:590px;padding-top:5px;">
+                <div>
+                    <img src="data:image;base64,@System.Convert.ToBase64String(prod.product.Image)" height="100" width="100"  />
+                </div>
+                <div style="width:300px; overflow:hidden;">
+                    <h6 style="height: 7em;line-height: 7em; padding-left:10px;">@prod.product.Name</h6>
+                </div>
+                <div style="width:190px;text-align:right;">
+                     <p style="height: 7em;line-height: 7em;">
+                         <small>@prod.Quantity x</small> 
+                         <strong>@prod.product.TotalPrice.ToString("#,#", CultureInfo.InvariantCulture) ₸</strong>                  
+                     </p>
+                    
+                </div>
+            </div>
+        }
+        <div class="row" style="border-top: 2px solid grey;padding-top:20px;width:590px;">
+            <div style="width:295px;">
+                <h5 >Итого: </h5>
+            </div>
+            <div style="width:295px;text-align:right;">
+                <strong >@Model.Price.ToString("#,#", CultureInfo.InvariantCulture) ₸</strong>
+            </div>
+            
+            
+        </div>
+        
+    </div>
+</div>
+
+<script>
+$(function(){
+  
+  $("#phone").mask("+7(999) 999-9999");
+  
+});
+</script>

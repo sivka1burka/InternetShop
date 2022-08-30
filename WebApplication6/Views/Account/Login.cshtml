@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Авторизация";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model WebApplication6.ViewModels.LoginViewModel
+<div class="d-flex justify-content-center  " style="text-align:center">
+   
+    <form method="post" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
+         <h1>Вход в кабинет покупателя</h1>
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="pt-3">
+            
+            <input id="phone" asp-for="Phone" type="tel" class="plugin__input plugin__input_jmp" placeholder="Телефон*" size="30"/><br />
+            <span asp-validation-for="Phone"></span>
+        </div>
+        <div class="pt-3">
+            
+            <input asp-for="Password" placeholder="Пароль*" size="30"/><br />
+            <span asp-validation-for="Password"></span>
+        </div>    
+         <div class="pt-3">
+            <label asp-for="RememberMe">Запомнить меня</label>
+            <input asp-for="RememberMe" />
+        </div>
+        <div class="pt-3">
+            <div> <input type="submit" class="btn" style="background: #B79B7E; color:white" value="Войти" /> </div>
+            
+            
+        </div>
+    </form>
+</div>
+
+<script>
+
+$(function(){
+  
+  $("#phone").mask("+7(999) 999-9999");
+  
+});
+</script>

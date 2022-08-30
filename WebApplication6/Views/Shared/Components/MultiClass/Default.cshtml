@@ -1,0 +1,36 @@
+﻿@model WebApplication6.Models.MultiClass
+
+
+@*<div class="side">
+         <button id="hider" class="category_block"><h5>Категории товаров ↓</h5></button>
+            <ul id="categoryMenu" class="menu m-0 p-0 list-unstyled">
+                @foreach(Category category in Model.categories)
+                {
+                    <li class="menu__list "><a  asp-controller="Home" asp-action="Index" asp-route-categoryId=@category.Id><h5>@category.Name</h5> </a>
+                        <ul class="menu__drop m-0 list-unstyled " >
+                            @foreach(Subcategory subcategory in Model.subcategories.Where(s=>s.CategoryId==category.Id))
+                            {
+                                <li><a asp-controller="Home" asp-action="Index" asp-route-subcategoryId=@subcategory.Id asp-route-categoryId=@subcategory.CategoryId><h6>@subcategory.Name</h6> </a></li>
+                            }                   
+                        </ul>
+                    </li>
+                }               
+            </ul>
+            
+    </div>  *@
+
+<li><a asp-controller="Home" asp-action="Index" class="active">Каталог ↓<span class="fa fa-angle-down"></span></a>
+    <ul class="submenu"> 
+        @foreach(Category category in Model.categories)
+        {
+            <li><a asp-controller="Home" asp-action="Index" asp-route-categoryId=@category.Id>@category.Name<span class="fa fa-angle-down"></span></a>
+                <ul class="submenu">
+                    @foreach(Subcategory subcategory in Model.subcategories.Where(s=>s.CategoryId==category.Id))
+                    {
+                        <li><a asp-controller="Home" asp-action="Index" asp-route-subcategoryId=@subcategory.Id asp-route-categoryId=@subcategory.CategoryId>@subcategory.Name</a></li>
+                    }                         
+                </ul>
+            </li>
+        }    
+    </ul>
+</li>

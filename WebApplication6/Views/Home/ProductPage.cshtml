@@ -1,0 +1,232 @@
+﻿@using System.Globalization
+@using WebApplication6.ViewModels
+@model ProductPageViewModel
+@{
+    ViewData["Title"] = Model.product.Name;
+}
+
+
+
+<div style="width:1200px; margin: 0 auto; padding-top:20px; padding-bottom:20px;">
+    <h3>@Model.product.Name</h3>
+    <div class="row">
+        <div style="height:400px;width:400px;">
+            <img src="data:image;base64,@System.Convert.ToBase64String(@Model.product.Image)" height="400" width="400"  />
+        </div>
+        <div style="height:400px;width:550px;">
+            
+        </div>
+        <div  style="width:250px; height:200px; text-align:center;  background:#f7f7f7; border-radius:10px; padding-top:10px;" >
+            @if (@Model.product.DiscountPercentage == 0)
+            {
+                <h3 class="pt-3">@Model.product.TotalPrice.ToString("#,#", CultureInfo.InvariantCulture) ₸</h3>
+            }
+            else
+            {
+                <h3 class="pt-3">@Model.product.TotalPrice.ToString("#,#", CultureInfo.InvariantCulture) ₸</h3>
+                <h6 class="text-muted"><s>@Model.product.Price.ToString("#,#", CultureInfo.InvariantCulture) ₸</s></h6>
+            }
+            @if (@Model.product.Amount > 0)
+            {
+                <h6>В наличии: @Model.product.Amount</h6>
+                <a asp-controller="ShopCart" asp-action="AddToCart" asp-route-id="@Model.product.Id"><div class="btn" style="background: #B79B7E; color:white" asp-controller="Order">В корзину</div></a>
+            }
+            else
+            {
+                <h6>Увы, товара нет в наличии</h6>
+            }
+        </div>
+    </div>
+    <div class="pt-5" >
+        <h5>Описание</h5>
+        @foreach(var str in Model.product.Description.Split('/'))
+        {
+            <b style="font-weight:200">@str</b><br />
+        } 
+    </div>
+    <div style="padding-top:20px;padding-bottom:20px;">
+        <div class="row">
+            <div style="width:600px;">
+                <h5>Отзывы: @Model.reviews.Count()</h5>
+            </div>
+           
+        </div>
+        @if (@Model.reviews != null)
+        {
+            @foreach(Review review in @Model.reviews)
+            {
+            <div style="padding-top:10px;padding-bottom:10px;">
+                <div class="row">
+                    <div>
+                        <h6>@review.user.Name</h6>
+                    </div>
+                    <div class="text-muted">
+                        <h6 style="font-weight:400">@review.dateOfWriting.Day/@review.dateOfWriting.Month/@review.dateOfWriting.Year</h6>
+                    </div>
+                </div>
+                <div>
+                    <div class="row">
+                        @for(int i = 0; i < review.Stars; i++)
+                        {
+                            <p>1</p>
+                        }
+                    </div>
+                    @review.Description
+                </div>
+
+            </div>
+            }
+        }
+        
+        
+        
+    </div>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+        <h5>Оцените товар</h5>
+        <form asp-controller="Home" asp-action="ProductPage"  method="post" enctype="multipart/form-data">
+            <input style="display:none" type="number" asp-for="@Model.product.Id" value="@Model.product.Id"/>
+            <div class="form-group">
+               
+                <div class="rating">
+                    <div class="simple-rating">
+                        
+                        <div class="simple-rating__items">
+                            <input asp-for="@Model.NewReview.Stars" id="simple-rating__5" type="radio" class="simple-rating__item  form-control" value="5" name="simple-rating" />
+                            <label  for="simple-rating__5" class="simple-rating__label control-label"></label>
+                            <input asp-for="@Model.NewReview.Stars" id="simple-rating__4" type="radio" class="simple-rating__item form-control" value="4" name="simple-rating" />
+                            <label for="simple-rating__4" class="simple-rating__label control-label"></label>
+                            <input asp-for="@Model.NewReview.Stars" id="simple-rating__3" type="radio" class="simple-rating__item form-control" value="3" name="simple-rating" />
+                            <label for="simple-rating__3" class="simple-rating__label control-label"></label>
+                            <input asp-for="@Model.NewReview.Stars" id="simple-rating__2" type="radio" class="simple-rating__item form-control" value="2" name="simple-rating" />
+                            <label for="simple-rating__2" class="simple-rating__label control-label"></label>
+                            <input asp-for="@Model.NewReview.Stars" id="simple-rating__1" type="radio" class="simple-rating__item form-control" value="1" name="simple-rating" />
+                            <label for="simple-rating__1" class="simple-rating__label control-label"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.NewReview.Description" class="control-label">Описание отзыва</label>
+                <input type="text" asp-for="@Model.NewReview.Description" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Отправить" class="btn" style="background: #B79B7E; color:white" />
+            </div>
+        </form>
+    </div>
+    }
+    
+</div>
+
+@*<script type="text/javascript">
+    const ratings=document.querySelectorAll('.rating');
+    if(ratings.lenght>0){
+        initRatings();
+    }
+
+    function initRatings() {
+        let ratingActive, ratingValue;
+
+        for(let index=0; index<ratingActive.length;index++){
+            const rating=rating[index];
+            initRatings(rating);
+        }
+
+        function initRating(rating){
+            initRatingVars(rating);
+
+            setRatingActiveWidth();
+
+        }
+
+        function initRatingVars(rating){
+            ratingActive=rating.querySelector('.rating__active');
+            ratingValue=rating.querySelector('.rating__value');
+        }
+
+        function setRatingActiveWidth(index=ratingValue.innerHTML){
+            const ratingActiveWidth= index / 0.05;
+            ratingActive.style.ratingActiveWidth=`${ratingActiveWidth}%`;
+
+        }
+
+        function setRating(rating){
+            const ratingItems=rating.querySelectorAll('.rating__item');
+            for(let index=0;index<ratingItems.length;index++){
+                const ratingItem=ratingItems[index];
+                ratingItem.addEventListener("mouseenter", function (e){
+                    initRatingRatingVars(rating);
+                    setRatingActiveWidth(ratingItem.value);
+                });
+                rating.ratingItem.addEventListener("mouseleave",function (e) {
+                    setRatingActiveWidth();
+                });
+                ratingItem.addEventListener("click",function (e){
+                    initRatingVars(rating);
+                    if(rating.dataset.ajax){
+                        setRatingValue(ratingItem.value,rating);
+
+                    }
+                    else{
+                        ratingValue.innerHTML=index+1;
+                        setRatingActiveWidth();
+                    }
+                });
+            }
+        }
+    }
+</script>*@
+
+@*<div class="container">
+
+
+     <div class="container row" >
+     <div class="border-top border-bottom  " style=" border-width:medium;" >
+         <h3>@Model.Name</h3>
+         <div class="row">
+             <div style="padding-right:100px;">
+                 <img src="data:image;base64,@System.Convert.ToBase64String(@Model.Image)" height="400" width="400"  />
+             </div>
+             <div  style="width:250px; height:200px; text-align:center;  background:#f7f7f7; border-radius:10px; padding-top:10px;" >
+                @if (@Model.DiscountPercentage == 0)
+                {
+                    <h3 class="pt-3">@Model.TotalPrice.ToString("#,#", CultureInfo.InvariantCulture) ₸</h3>
+                }
+                else
+                {
+                    <h3 class="pt-3">@Model.TotalPrice.ToString("#,#", CultureInfo.InvariantCulture) ₸</h3>
+                    <h6 class="text-muted"><s>@Model.Price.ToString("#,#", CultureInfo.InvariantCulture) ₸</s></h6>
+                }
+
+         
+                @if (@Model.Amount > 0)
+                {
+                    <h6>В наличии: @Model.Amount</h6>
+             
+                    <a asp-controller="ShopCart" asp-action="AddToCart" asp-route-id="@Model.Id"><div class="btn" style="background: #B79B7E; color:white" asp-controller="Order">В корзину</div></a>
+                }
+                else
+                {
+                    <h6>Увы, товара нет в наличии</h6>
+                }
+
+             </div>
+             
+             
+         </div>
+         <div class="pt-5" >
+                 <h5>Описание</h5>
+                    @foreach(var str in Model.Description.Split('/'))
+                    {
+                        <b style="font-weight:200">@str</b><br />
+                    } 
+                    
+         </div>
+         
+     </div>
+    
+ </div>
+ </div>*@

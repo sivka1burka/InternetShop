@@ -1,0 +1,59 @@
+﻿@using System.Globalization
+@model Order
+@{
+    ViewData["Title"] = "Статус заказа";
+}
+
+
+<div  style="margin: 0 auto; width:1200px; padding-top:20px;">
+    <div style="padding-bottom:10px;">
+        <h2 style="font-weight:bold;">Заказ #@Model.Id </h2>
+    </div>
+    <div style="border-bottom:2px solid grey">
+        <h4>Информация о заказе</h4>
+    </div>
+    <div style="border-bottom:2px solid grey">
+        <p>Дата оформления: @Model.datePurchase</p>
+        <p>Сумма заказа: @Model.Price.ToString("#,#", CultureInfo.InvariantCulture) ₸</p>
+        <p>Имя получателя: @Model.FullName</p>
+        <p>Контактный номер: @Model.PhoneNumber</p>
+    </div>
+    <div style="padding-top:20px; ">
+        <h4>Состав заказа</h4>
+        <div style="width:1200px; ">
+            <div class="row" style="height:50px;border-bottom:1px solid grey; padding:0; margin:0;">
+                <div style="width:600px;">
+                    <p>Наименование</p>
+                </div>
+                <div style="width:300px;text-align:center;">
+                    <p>Кол-во</p>
+                </div>
+                <div style="width:300px;text-align:right;">
+                    <p>
+                        Стоимость
+                    </p>
+                </div>
+            </div>
+            @foreach(var prod in @Model.Products)
+            {
+                <div class="row" style="border-bottom:1px solid grey; height:30px; width:1200px;padding:0; margin:0;">
+                    <div style="width:600px; overflow:hidden;">
+                        <p>@prod.product.Name</p>
+                    </div>
+                    <div style="width:300px; text-align:center;">
+                        <p>@prod.Quantity</p>
+                    </div>
+                    <div style="width:300px;text-align:right;">
+                        <p>@prod.Price.ToString("#,#", CultureInfo.InvariantCulture) ₸</p>
+                    </div>
+                </div>
+            }
+            <div style="width:1200px;height:70px;text-align:right;padding:0; margin:0;">
+                <p style="font-weight:bold;">Итого: @Model.Price.ToString("#,#", CultureInfo.InvariantCulture) ₸</p>
+            </div>
+
+        </div>       
+    </div>
+</div>
+
+

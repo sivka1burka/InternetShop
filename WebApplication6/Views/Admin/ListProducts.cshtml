@@ -1,0 +1,81 @@
+﻿@using WebApplication6.ViewModels
+@model ListProductsViewModel
+
+
+<div class="row" style="margin: 0 auto; width:1550px; text-align:center;">
+    <div style="width:300px;">
+        <div  style="padding-bottom:20px;">
+            <h5>Заказы</h5>
+            <a asp-controller="Admin" asp-action="ListOrders"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Список заказов</h6></div></a>
+        </div>
+        <div  style="padding-bottom:20px;">
+            <h5>Товары</h5>
+            <a asp-controller="Admin" asp-action="AddProduct"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black; "><h6>Добавление товара</h6> </div></a>
+            <a asp-controller="Admin" asp-action="ListProducts"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Удаление\изменение товара</h6> </div></a>
+        </div>
+        <div  style="padding-bottom:20px;">
+            <h5>Пользователи</h5>
+            <a asp-controller="Roles" asp-action="Index"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Список ролей</h6></div></a>
+            <a asp-controller="Roles" asp-action="Create"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Добавить роль</h6></div></a>
+            <a asp-controller="Roles" asp-action="UserList"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"> <h6>Список пользователей</h6></div></a>
+        </div>
+        <div  style="padding-bottom:20px;">
+            <h5>Новости</h5>
+            <a asp-controller="Admin" asp-action="AddNews"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Добавить новость</h6></div></a>
+            <a asp-controller="Admin" asp-action="ListNews"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Удаление\изменение новости</h6></div></a>       
+        </div>
+    </div>
+    <div style="width:1200px;padding-left:50px;padding-top:10px; text-align:center;">
+        <form method="get" asp-area="" asp-controller="Admin" asp-action="ListProducts">
+        <div class="form-inline" style="margin: 0 auto; width:450px;">
+            <input name="searchString" placeholder="Я хочу найти" size="40" class="form-control" style="border:none; border-radius:0; background: #f7f7f7; color:#808080; border-radius: 10px 0 0 10px; box-shadow: none;">
+            <input type="submit" value="🔍" class="btn" style="background: #f7f7f7; border:none; border-radius:0; color:#808080; height:38px;border-radius:0 10px 10px 0; font-size:large;box-shadow: none;"  />
+        </div>
+        </form>
+        <table class="table">
+        <tr>
+            <td>Id</td>
+            <td>Изображение</td>
+            <td>Название</td>
+            <td>Цена</td>
+            <td>Скидка</td>
+            <td>Цена со скидкой</td>
+            <td>Кол-во</td>
+            <td>Взаимодействие</td>
+        </tr>
+        @foreach (var item in Model.products)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td><img src="data:image;base64,@System.Convert.ToBase64String(@item.Image)" height="50" width="50"  /></td>
+                <td><a asp-controller="Home" asp-action="ProductPage" asp-route-id="@item.Id">@item.Name</a></td>
+                <td>@item.Price</td>
+                <td>@item.DiscountPercentage %</td>         
+                <td>@item.TotalPrice</td>
+                <td>@item.Amount</td>
+                <td>
+                    <a asp-controller="Admin" asp-action="DeleteProduct" asp-route-idProduct="@item.Id">Удалить</a><br/>
+                    <a asp-controller="Admin" asp-action="EditProduct" asp-route-idProduct="@item.Id">Изменить</a>
+                </td>
+            </tr>
+        }
+        </table>
+        <div class="row" style=" justify-content: center; width: 930px; margin: 0 auto; padding-bottom:100px;">
+            @if (Model.PageViewModel.HasPreviousPage)
+            {
+                <a asp-action="ListProducts" asp-route-page="@(Model.PageViewModel.PageNumber - 1)" class="btn btn-outline-dark">
+                    <i class="glyphicon glyphicon-chevron-left"></i>
+                    Назад
+                </a>
+            }
+            @if (Model.PageViewModel.HasNextPage)
+            {
+                <a asp-action="ListProducts"  asp-route-page="@(Model.PageViewModel.PageNumber + 1)" class="btn btn-outline-dark">
+                    Вперед
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                </a>
+            }
+        </div>
+    </div>       
+</div>
+

@@ -1,0 +1,108 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | Knupl</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/customCSS.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>  
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.maskedinput.min.js"></script>
+    
+    
+    
+       
+    
+    
+</head>
+<body>
+    <header>
+       
+        <nav>
+            <div style="text-align:center; border-bottom: 1px solid black; "></div>
+            <ul class="topmenu">
+                
+                <li style="height:58px; ">
+                    <a style="text-decoration:none; color:white ; padding:0 0 30px 10px;" asp-controller="Home" asp-action="HomePage"><span style="font-weight:bold; font-size:350%">KNUPL</span></a>
+                </li>
+                @await Component.InvokeAsync("MultiClass")
+                <li style="padding-top:10px;"> 
+                    <form method="get" asp-area="" asp-controller="Home" asp-action="Index">
+                        <div class="form-inline">
+                        
+                        <input name="searchString" placeholder="Я хочу найти" size="40" class="form-control" style="border:none; border-radius:0; background: #f7f7f7; color:#808080; border-radius: 10px 0 0 10px; box-shadow: none;">
+                        <input type="submit" value="🔍" class="btn" style="background: #f7f7f7; border:none; border-radius:0; color:#808080; height:38px;border-radius:0 10px 10px 0; font-size:large;box-shadow: none;"  />
+                        </div>
+                    </form>
+                </li>
+                
+
+                 @if (User.Identity.IsAuthenticated)
+                         {
+
+                             <li style="float:right ">
+                                 
+                                  <form  style="padding-top:10px; padding-right:0px;" method="post" asp-controller="Account" asp-action="Logout">
+                                     <input type="submit"  class="btn" style="background: #B79B7E; color:white" value="Выход" />
+                                 </form>
+                             </li>
+                             <li style="float:right; padding-left:0">
+                                 <a style="padding-right:5px" asp-controller="Account" asp-action="UserPage">@User.Identity.Name</a>
+                             </li>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li style="float:right; padding-left:0">
+                                 <a style="padding-right:5px" asp-controller="Admin" asp-action="Index">Админ-панель</a>
+                        </li>
+                    }
+
+                }
+                        else
+                        {                        
+                            <li style="float:right">
+                                <a  asp-controller="Account" asp-action="Register">Зарегистрироваться</a>
+                            </li> 
+                             <li style="float:right">
+                                 <a  asp-controller="Account" asp-action="Login">Войти</a>
+                            </li>
+                        }
+                
+                <li style="float:right"> <a asp-controller="ShopCart" asp-action="ShopCart">Корзина</a></li>
+            </ul>
+
+        </nav>
+
+
+    </header>
+    <div >
+        <main role="main"  class="pt-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted" style="background: #413F3C; border-radius: 10% 10% 0 0">
+        <div class="container row " >
+            <div style="padding-left:20px">
+                <p>&copy; 2022 - Knupl</p>
+            </div>
+            <div style="position: absolute; right: 0; padding-right:20px">
+                <h6 style="font-weight:500">Контакты</h6>
+                <h6 style="font-weight:400">+7 787 630-76-56 | +7 945 756-66-47</h6>
+                <h6 style="font-weight:400">г. Караганда, ул. Ержанова, 47/3</h6>
+            </div>
+        </div>
+    </footer>
+    
+
+    
+    
+    @await RenderSectionAsync("Scripts", required: false)
+
+   
+</body>
+</html>

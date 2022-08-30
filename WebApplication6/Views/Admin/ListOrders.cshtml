@@ -1,0 +1,63 @@
+﻿@using System.Globalization
+@model List<Order>
+
+
+<div class="row" style="margin: 0 auto; width:1550px; text-align:center;">
+    <div style="width:300px;">
+        <div  style="padding-bottom:20px;">
+            <h5>Заказы</h5>
+            <a asp-controller="Admin" asp-action="ListOrders"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Список заказов</h6></div></a>
+        </div>
+        <div  style="padding-bottom:20px;">
+            <h5>Товары</h5>
+            <a asp-controller="Admin" asp-action="AddProduct"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black; "><h6>Добавление товара</h6> </div></a>
+            <a asp-controller="Admin" asp-action="ListProducts"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Удаление\изменение товара</h6> </div></a>
+        </div>
+        <div  style="padding-bottom:20px;">
+            <h5>Пользователи</h5>
+            <a asp-controller="Roles" asp-action="Index"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Список ролей</h6></div></a>
+            <a asp-controller="Roles" asp-action="Create"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Добавить роль</h6></div></a>
+            <a asp-controller="Roles" asp-action="UserList"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"> <h6>Список пользователей</h6></div></a>
+        </div>
+        <div  style="padding-bottom:20px;">
+            <h5>Новости</h5>
+            <a asp-controller="Admin" asp-action="AddNews"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Добавить новость</h6></div></a>
+            <a asp-controller="Admin" asp-action="ListNews"><div style="text-align:center; width:300px; height:50px; color:white; background: #B79B7E; padding-top:10px; border-bottom: 2px solid black;"><h6>Удаление\изменение новости</h6></div></a>       
+        </div>
+    </div>
+    <div style="width:1200px;padding-left:50px;padding-top:10px; text-align:center;">
+        <h2 style="font-weight:bold;">История заказов</h2>
+        <form method="get" asp-area="" asp-controller="Admin" asp-action="ListOrders">
+        <div class="form-inline" style="margin: 0 auto; width:450px;">
+            <input type="number" name="searchString" placeholder="Я хочу найти" size="40" class="form-control" style="border:none; border-radius:0; background: #f7f7f7; color:#808080; border-radius: 10px 0 0 10px; box-shadow: none;">
+            <input type="submit" value="🔍" class="btn" style="background: #f7f7f7; border:none; border-radius:0; color:#808080; height:38px;border-radius:0 10px 10px 0; font-size:large;box-shadow: none;"  />
+        </div>
+        </form>
+        <div class="row" style="width:600px;height:50px; padding-top:20px;">
+            <div style="width:200px;text-align:left;height:50px;">
+                <p>Дата оформления</p>
+            </div>
+            <div style="width:200px;text-align:center;height:50px;">
+                <p>Номер заказа</p>
+            </div>
+            <div style="width:200px;text-align:right;height:50px;">
+                <p>Сумма заказа</p>
+            </div>
+        </div>
+        @foreach(var order in Model)
+        {
+            <div class="row" style="width:600px;">
+                <div style="width:200px;text-align:left;height:30px;">
+                    <p>@order.datePurchase</p>
+                </div>
+                <div style="width:200px;text-align:center;height:30px;">
+                    <a style="color:#B79B7E;" asp-controller="ShopCart" asp-action="OrderStatus" asp-route-id="@order.Id">@order.Id</a>
+                </div>
+                <div style="width:200px;text-align:right;height:30px;">
+                    <p>@order.Price.ToString("#,#", CultureInfo.InvariantCulture) ₸</p>
+                </div>
+            </div>
+        }
+    </div>     
+    
+</div>

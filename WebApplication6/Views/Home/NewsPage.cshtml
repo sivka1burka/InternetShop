@@ -1,0 +1,17 @@
+﻿@model News
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div style="margin: 0 auto; width:1100px;">
+    <div>
+        <h2>@Model.Name</h2>
+         <img src="data:image;base64,@System.Convert.ToBase64String(@Model.Image)" width="1100" height="300" style="border-radius: 10px;"/>
+         
+    </div>
+    <div style="padding-top:30px;">
+        <h5>@Model.Description</h5>
+        <h6 class="text-muted" style="font-weight:200">@Model.PublicationDate.Day/@Model.PublicationDate.Month/@Model.PublicationDate.Year</h6>
+    </div>
+</div>
+

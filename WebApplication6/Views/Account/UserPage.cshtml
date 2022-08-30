@@ -1,0 +1,104 @@
+﻿@using WebApplication6.ViewModels
+@model ChangeUserViewModel
+@{
+    ViewData["Title"] = "Личный кабинет";
+}
+
+<div class="row" style="margin: 0 auto; width:1200px;">
+    <div style="width:900px">
+        <h1>Профиль пользователя</h1>
+        <form method="post" asp-controller="Account" asp-action="UserPage">
+        <div class="row" style="padding-bottom:20px; padding-top:40px;">
+            <div style="width:200px;">
+                <h5 style="text-align:right;">Номер телефона: </h5>
+            </div>
+            <div style="padding-left:30px;">
+                <input name="phone" id="phone" asp-for="Phone" type="text" value="@Model.Phone" size="80" />   
+            </div>
+            
+        </div>
+        <div class="row" style="padding-bottom:20px;">
+            <div style="width:200px;">
+                <h5 style="text-align:right;">Имя: </h5>
+            </div>
+            <div style="padding-left:30px;">
+                <input asp-for="Name" value="@Model.Name" size="80" />   
+            </div>
+            
+        </div>
+        <div class="row" style="padding-bottom:20px;">
+            <div style="width:200px;">
+                <h5 style="text-align:right;">Фамилия: </h5>
+            </div>
+            <div style="padding-left:30px;">
+                <input asp-for="Surname" value="@Model.Surname" size="80" />   
+            </div>            
+        </div>
+        <div class="row" style="padding-bottom:20px;">
+            <div style="width:200px;">
+                <h5 style="text-align:right;">Дата рождения: </h5>
+            </div>
+            <div style="padding-left:30px;">
+                <input asp-for="Age" value="@Model.Age" size="80" />   
+            </div>          
+        </div>
+        <div class="row" style="padding-bottom:20px;">
+            <div style="width:200px;">
+                <h5 style="text-align:right;">Текущий пароль: </h5>
+            </div>
+            <div style="padding-left:30px;">
+                <input asp-for="OldPassword" size="80" />   
+            </div>
+        </div>
+        <div class="row" style="padding-bottom:20px;">
+            <div style="width:200px;">
+                <h5 style="text-align:right;">Новый пароль: </h5>
+            </div>
+            <div style="padding-left:30px;">
+                <input asp-for="Password"  size="80" /><br />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>            
+        </div>
+        <div class="row" style="padding-bottom:20px;">
+            <div style="width:200px;">
+                <h5 style="text-align:right;">Подтверждение нового пароля: </h5>
+            </div>
+            <div style="padding-left:30px;">
+                <input asp-for="PasswordConfirm"  size="80" /><br />
+                <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+            </div>            
+        </div>
+        <div class="row" >
+            <input type="submit" class="btn" style="background: #B79B7E; color:white" value="Сохранить" />
+            <a style="margin-left:20px;" asp-controller="Account" asp-action="UserPage"><div class="btn" style="background: #B79B7E; color:white" asp-controller="Order">Отмена</div></a>
+        </div>
+        </form>
+    </div>
+
+    <div style="width:300px; padding-top:100px; ">
+        <a asp-controller="Account" asp-action="UserPage">
+            <div class="btn" style="background: #B79B7E; color:white;height:50px; padding:0px;border-bottom: 2px solid grey; text-align:center;width:300px; border-top-left-radius:10px; border-top-right-radius:10px;border-bottom-left-radius:0; border-bottom-right-radius:0;">
+                <p style="font-size: 20px">Личные данные</p>
+            </div>
+        </a>
+        <a asp-controller="Account" asp-action="OrdersHistory">
+            <div class="btn" style="background: #B79B7E; color:white;height:50px; padding:0px;border-bottom: 2px solid grey; text-align:center;width:300px;border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:0; border-bottom-right-radius:0; ">
+                <p style="font-size: 20px" >История заказов</p>
+            </div>
+        </a>
+        <a asp-controller="ShopCart" asp-action="ShopCart">
+            <div class="btn" style="background: #B79B7E; color:white;height:50px; padding:0px;border-bottom: 2px solid grey; text-align:center;width:300px;border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:0; border-bottom-right-radius:0; ">
+                <p style="font-size: 20px">Корзина</p>
+            </div>
+        </a>
+        <form  method="post" asp-controller="Account" asp-action="Logout">
+            @*<button style="background: #B79B7E; color:white;height:50px; width:300px; padding:0px;border-bottom: 2px solid grey; text-align:center; border-bottom-left-radius:10px; border-bottom-right-radius:10px;">
+                <h5>Выйти</h5>*@
+                <input type="submit"  class="btn" style="background: #B79B7E; color:white;height:50px; width:300px; padding:0px;border-bottom: 2px solid grey; text-align:center;border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:10px; border-bottom-right-radius:10px;font-size: 20px" value="Выйти">
+            @*</button>*@
+        </form>
+        
+    </div>
+    
+    
+</div>
